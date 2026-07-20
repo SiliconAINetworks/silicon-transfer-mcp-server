@@ -49,6 +49,7 @@ export function registerAll(server: McpServer, cm: ConnectionManager): void {
         username: z.string().describe("Benutzername"),
         password: z.string().optional().describe("Passwort (bei SSH-Key optional)"),
         privateKeyPath: z.string().optional().describe("Pfad zu einem privaten SSH-Key (nur sftp)"),
+        passphrase: z.string().optional().describe("Passphrase des SSH-Keys, falls verschluesselt"),
       },
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     },

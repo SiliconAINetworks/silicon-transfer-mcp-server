@@ -17,6 +17,7 @@ export interface ConnectOptions {
   username: string;
   password?: string;
   privateKeyPath?: string;
+  passphrase?: string;
 }
 
 export interface RemoteEntry {
@@ -51,6 +52,8 @@ export class ConnectionManager {
         username: o.username,
         password: o.password,
         privateKey: o.privateKeyPath ? readFileSync(o.privateKeyPath) : undefined,
+        passphrase: o.passphrase,
+        readyTimeout: 30000,
       });
       this.sftp = c;
     } else {
