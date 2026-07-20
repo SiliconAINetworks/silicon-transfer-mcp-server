@@ -8,22 +8,20 @@
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
+import { ConnectionManager } from "./services/connection.js";
+import { registerAll } from "./tools/register.js";
 
 const SERVER_NAME = "silicon-transfer-mcp-server";
 const SERVER_VERSION = "0.1.0";
 
-const server = new McpServer({
-  name: SERVER_NAME,
-  version: SERVER_VERSION,
-});
+const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION });
+const connections = new ConnectionManager();
 
 server.registerTool(
   "silicon_server_info",
   {
     title: "Server Info",
-    description:
-      "Zeigt Name, Version und Faehigkeiten dieses MCP-Servers. Nuetzlich als Lebenszeichen-Check.",
+    description: "Name, Version und Philosophie dieses MCP-Servers. Lebenszeichen-Check.",
     inputSchema: {},
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   },
@@ -32,8 +30,7 @@ server.registerTool(
       name: SERVER_NAME,
       version: SERVER_VERSION,
       philosophy: "erst beweisen, dann behaupten - every transfer returns its checksum proof",
-      protocols_planned: ["ftp", "ftps", "sftp"],
-      status: "Rohbau steht - Werkzeuge folgen",
+      protocols: ["ftp", "ftps", "sftp"],
     };
     return {
       content: [{ type: "text", text: JSON.stringify(output, null, 2) }],
@@ -41,6 +38,8 @@ server.registerTool(
     };
   }
 );
+
+registerAll(server, connections);
 
 async function main(): Promise<void> {
   const transport = new StdioServerTransport();
