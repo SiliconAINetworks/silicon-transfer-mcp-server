@@ -10,6 +10,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { ConnectionManager } from "./services/connection.js";
 import { registerAll } from "./tools/register.js";
+import { registerDirTools } from "./tools/register-dir.js";
 
 const SERVER_NAME = "silicon-transfer-mcp-server";
 const SERVER_VERSION = "0.1.0";
@@ -40,6 +41,7 @@ server.registerTool(
 );
 
 registerAll(server, connections);
+registerDirTools(server, connections);
 
 async function main(): Promise<void> {
   const transport = new StdioServerTransport();

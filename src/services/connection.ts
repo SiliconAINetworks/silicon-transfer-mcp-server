@@ -155,4 +155,23 @@ export class ConnectionManager {
     }
     return { sha256: hash.digest("hex"), bytes };
   }
+
+  async rename(fromPath: string, toPath: string): Promise<void> {
+    this.ensure();
+    if (this.sftp) { await this.sftp.rename(fromPath, toPath); return; }
+    await this.ftp!.rename(fromPath, toPath);
+  }
+
+  async uploadDir(localDir: string, remoteDir: string): Promise<void> {
+    this.ensure();
+    if (this.sftp) { await this.sftp.uploadDir(localDir, remoteDir); return; }
+    await this.ftp!.uploadFromDir(localDir, remoteDir);
+    await this.ftp!.cd("/");
+  }
+
+  async downloadDir(remoteDir: string, localDir: string): Promise<void> {
+    this.ensure();
+    if (this.sftp) { await this.sftp.downloadDir(remoteDir, localDir); return; }
+    await this.ftp!.downloadToDir(localDir, remoteDir);
+  }
 }
