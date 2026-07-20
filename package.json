@@ -1,0 +1,39 @@
+{
+  "name": "silicon-transfer-mcp-server",
+  "version": "0.1.0",
+  "description": "FTP/SFTP/FTPS MCP server with built-in transfer proofs - every upload returns a checksum verdict. Built from scratch by Silicon Networks.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "silicon-transfer-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "author": "Silicon Networks (https://aegis888.com)",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ftp",
+    "sftp",
+    "ftps",
+    "file-transfer",
+    "checksum",
+    "deploy",
+    "claude"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "basic-ftp": "^5.0.5",
+    "ssh2-sftp-client": "^11.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ssh2-sftp-client": "^9.0.4",
+    "typescript": "^5.6.0"
+  }
+}
