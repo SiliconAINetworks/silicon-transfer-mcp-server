@@ -1,12 +1,14 @@
 # Silicon Transfer MCP Server
 
+[![npm version](https://img.shields.io/npm/v/silicon-transfer-mcp-server.svg)](https://www.npmjs.com/package/silicon-transfer-mcp-server) [![npm downloads](https://img.shields.io/npm/dm/silicon-transfer-mcp-server.svg)](https://www.npmjs.com/package/silicon-transfer-mcp-server) [![license](https://img.shields.io/npm/l/silicon-transfer-mcp-server.svg)](./LICENSE) [![node](https://img.shields.io/node/v/silicon-transfer-mcp-server.svg)](https://nodejs.org)
+
 **FTP / FTPS / SFTP for Claude and other MCP clients - with built-in transfer proofs.**
 
 Every upload and download returns a verdict: `PROVEN` only when the SHA-256 of the
 remote file matches your local file. No more "transfer complete" on blind trust.
 
 > Philosophy: *prove it, then claim it.* Built from scratch by
-> [Silicon Networks](https://aegis888.com) - the makers of AEGIS Shield.
+> [Silicon Networks](https://siliconnetworks.ch) - the makers of [AEGIS Shield](https://aegis888.com).
 
 ## Why this one?
 
@@ -17,7 +19,7 @@ remote file matches your local file. No more "transfer complete" on blind trust.
 | Remote file fingerprint | download first | streamed SHA-256, no disk contact |
 | Protocols | often FTP only | FTP, FTPS, SFTP (password or SSH key) |
 
-## Tools (12)
+## Tools (13)
 
 **Connection:** `silicon_connect`, `silicon_disconnect`, `silicon_status`, `silicon_server_info`
 **Files:** `silicon_upload_file`, `silicon_download_file`, `silicon_delete_file`, `silicon_file_info`
@@ -29,16 +31,40 @@ files, size for directory trees (switch to hash when it matters).
 ## Install
 
 ```bash
+npm install -g silicon-transfer-mcp-server
+```
+
+That's it - [live on npm](https://www.npmjs.com/package/silicon-transfer-mcp-server). Or run it without installing via `npx` (see config below).
+
+<details>
+<summary>From source</summary>
+
+```bash
 git clone https://github.com/SiliconAINetworks/silicon-transfer-mcp-server.git
 cd silicon-transfer-mcp-server
 npm install
 npm run build
 ```
+</details>
 
 ## Claude Desktop configuration
 
 Add to your `claude_desktop_config.json` (no credentials in the config - you pass
 them at runtime through `silicon_connect`, for **your own server**):
+
+```json
+{
+  "mcpServers": {
+    "silicon-transfer": {
+      "command": "npx",
+      "args": ["-y", "silicon-transfer-mcp-server"]
+    }
+  }
+}
+```
+
+<details>
+<summary>Running from source instead</summary>
 
 ```json
 {
@@ -50,6 +76,7 @@ them at runtime through `silicon_connect`, for **your own server**):
   }
 }
 ```
+</details>
 
 ## Usage example
 
