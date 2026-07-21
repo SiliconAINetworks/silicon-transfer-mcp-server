@@ -104,10 +104,39 @@ of trusting a broken deploy.
 
 ## Security notes
 
-- Credentials are **runtime-only tool parameters** for your own server. This project
-  ships no server addresses, no defaults, no config files with secrets.
-- SFTP supports password or private key (`privateKeyPath`).
-- `silicon_delete_file` is destructive - list first, delete second.
+Built with the OWASP Top 10 for Agentic Applications (2026) in mind - specifically
+ASI02 (Tool Misuse) and ASI04 (Agentic Supply Chain).
+
+**What this server does not do**
+
+- No stored credentials. They are **runtime-only tool parameters** for your own
+  server - no defaults, no config files with secrets, no server addresses shipped.
+- No dynamic tool definitions. Every tool is fixed in the source you can read;
+  nothing is fetched from a remote registry at runtime, so no third party can
+  rewrite what your assistant thinks a tool does.
+- No telemetry, no phone-home, no analytics.
+
+**Sharp edges - operate accordingly**
+
+`silicon_delete_file`, `silicon_delete_directory` and `silicon_sync_deploy`
+(with `deleteExtras`) can destroy remote data. An assistant reading untrusted
+content - a web page, a PDF, an email - can be steered by instructions hidden
+inside it (indirect prompt injection). Treat these tools like `rm -rf`:
+
+- Connect with an account scoped to the directory you intend to touch, never root.
+- Prefer SSH keys over passwords; give the key its own restricted account.
+- Run `silicon_list_dir` before any delete, and read the plan before approving.
+- Keep `deleteExtras` off unless you are deliberately mirroring.
+
+**Verifying what you installed**
+
+Package name is exactly `silicon-transfer-mcp-server`, published by
+`aegisshield888`. Similar names on npm are placeholders we registered to prevent
+typosquatting - they contain no code. Source: the GitHub repository linked above.
+
+**Reporting**
+
+Found a hole? Open an issue on GitHub, or write to security@siliconnetworks.ch.
 
 ## License
 
