@@ -10,6 +10,8 @@ remote file matches your local file. No more "transfer complete" on blind trust.
 > Philosophy: *prove it, then claim it.* Built from scratch by
 > [Silicon Networks](https://siliconnetworks.ch) - the makers of [AEGIS Shield](https://aegis888.com).
 
+> **The complete kit:** pair it with [Silicon Skills](https://github.com/SiliconAINetworks/silicon-skills) - nine working rules for coding agents. The `safe-deploy` skill tells your agent *how* to deploy (local first, pull live state, stage, verify); this server gives it the tools and the proof.
+
 ## Why this one?
 
 | | Typical FTP tools | Silicon Transfer |
